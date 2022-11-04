@@ -1,0 +1,765 @@
+#5.7.0
+suite wasarchiv
+  edit ECF_MICRO '%'
+  edit ECF_EXTN '.ecf'
+  edit ECF_HOME '/home/zat2/CLAEF/suite'
+  edit ECF_INCLUDE '/home/zat2/CLAEF/suite/include'
+  edit ECF_TRIES '1'
+  edit STHOST 'ws1'
+  edit SCHOST 'hpc'
+  edit USER 'zat2'
+  edit ACCOUNT 'atlaef'
+  edit CNF_DEBUG '0'
+  edit KOPPLUNG '1'
+  edit ASSIMC '3'
+  edit ECF_JOB_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%'
+  edit ECF_KILL_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml kill %SCHOST% %ECF_JOB%'
+  edit ECF_STATUS_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml monitor %SCHOST% %ECF_JOB%'
+  family admin
+    task complete
+      edit NAME 'complete'
+      edit CLASS 'tf'
+      edit NP '1'
+      edit SUITENAME 'wasarchiv'
+      label run ""
+      label info ""
+      cron 01:40
+  endfamily
+  family runs
+    repeat date DATUM 20221014 20221231 1
+    task dummy
+      defstatus suspended
+      edit NP '1'
+      edit CLASS 'tf'
+      edit NAME 'dummy'
+      label run ""
+      label info ""
+    family RUN_00
+      edit LAUF '00'
+      edit VORHI '6'
+      edit LEAD '60'
+      edit LEADCTL '60'
+      family main
+        trigger /wasarchiv:TIME > 0800 and /wasarchiv:TIME < 0900
+        task gettrig
+          edit NP '1'
+          edit CLASS 'tf'
+          edit NAME 'gettrig'
+          label run ""
+          label info ""
+          label error ""
+        family MEM_00
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '00'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_00'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '00'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_00'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_01
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '01'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_01'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '01'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_01'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_02
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '02'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_02'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '02'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_02'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_03
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '03'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_03'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '03'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_03'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_04
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '04'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_04'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '04'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_04'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_05
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '05'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_05'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '05'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_05'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_06
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '06'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_06'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '06'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_06'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_07
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '07'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_07'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '07'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_07'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_08
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '08'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_08'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '08'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_08'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_09
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '09'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_09'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '09'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_09'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_10
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '10'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_10'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '10'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_10'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_11
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '11'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_11'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '11'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_11'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_12
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '12'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_12'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '12'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_12'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_13
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '13'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_13'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '13'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_13'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_14
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '14'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_14'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '14'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_14'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_15
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '15'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_15'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '15'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_15'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_16
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '16'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_16'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '16'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_16'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+      endfamily
+      task cleaning
+        trigger main == complete
+        edit NP '1'
+        edit CLASS 'tf'
+        edit NAME 'cleaning'
+        label run ""
+        label info ""
+    endfamily
+    family RUN_12
+      edit LAUF '12'
+      edit VORHI '6'
+      edit LEAD '48'
+      edit LEADCTL '48'
+      family main
+        trigger /wasarchiv:TIME > 2000 and /wasarchiv:TIME < 2100
+        task gettrig
+          edit NP '1'
+          edit CLASS 'tf'
+          edit NAME 'gettrig'
+          label run ""
+          label info ""
+          label error ""
+        family MEM_00
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '00'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_00'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '00'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_00'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_01
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '01'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_01'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '01'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_01'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_02
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '02'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_02'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '02'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_02'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_03
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '03'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_03'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '03'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_03'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_04
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '04'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_04'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '04'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_04'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_05
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '05'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_05'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '05'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_05'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_06
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '06'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_06'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '06'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_06'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_07
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '07'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_07'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '07'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_07'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_08
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '08'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_08'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '08'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_08'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_09
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '09'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_09'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '09'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_09'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_10
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '10'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_10'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '10'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_10'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_11
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '11'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_11'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '11'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_11'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_12
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '12'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_12'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '12'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_12'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_13
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '13'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_13'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '13'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_13'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_14
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '14'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_14'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '14'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_14'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_15
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '15'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_15'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '15'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_15'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+        family MEM_16
+          task copy
+            trigger ../gettrig == complete
+            edit MEMBER '16'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'copy_16'
+            label run ""
+            label info ""
+            label error ""
+          task mv2ecfs
+            trigger copy == complete
+            edit MEMBER '16'
+            edit NP '1'
+            edit CLASS 'tf'
+            edit NAME 'mv2ecfs_16'
+            label run ""
+            label info ""
+            label error ""
+        endfamily
+      endfamily
+      task cleaning
+        trigger main == complete
+        edit NP '1'
+        edit CLASS 'tf'
+        edit NAME 'cleaning'
+        label run ""
+        label info ""
+    endfamily
+  endfamily
+endsuite
+# enddef

@@ -1,0 +1,70 @@
+%manual
+TASK:
+    claef/runs/RUN_[HH]/cleaning
+
+    [HH]=00,12
+
+DESCRIPTION:
+    This task cleans the directories after copying to ECFS
+
+SOURCE:
+    '~zat2/CLAEF/suite/scripts_wasarchiv/cleaning.ecf'
+
+TRIGGER:
+    claef/runs/RUN_[HH]/main == complete
+
+MAIN FRAME:
+    aa/ab/ac/ad (see variable SCHOST)
+
+%end
+
+%include <sbatch.h>
+%include <head.h>
+%include <ompi.h>
+
+date=%DATUM%
+run=%LAUF%
+assimc=%ASSIMC%
+files=%STHOST%
+user=%USER%
+
+if [ -s /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
+then
+
+   while IFS=" " read date run; do
+
+      # report to ecflow
+      ecflow_client --label=run "The date is now ${date} ${run}"
+
+      #################################Run setup script for environment##############################
+      . /ec/${files}/tc/${user}/home/CLAEF/SCR/setup_cy43.ksh $run $date 999 999 $assimc $user $files
+      ###############################################################################################
+
+      RUNDIR=/${files}/tcwork/${user}/lb/CLAEF/ARCHIV/${date}
+
+      if [ -d ${RUNDIR} ] ; then
+
+         ecflow_client --label=info "Cleaning ${date}"
+         rm -rf ${RUNDIR}
+
+      else
+
+         ecflow_client --label=info "${date} does not exist"
+
+      fi
+
+   done < /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
+
+   ecflow_client --label=info "Remove archiv.txt"
+   rm -f /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
+
+   ecflow_client --label=info "Remove trigger.txt"
+   rm -f /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/trigger.txt
+
+else
+
+   ecflow_client --label=info "archiv.txt does not exist"
+
+fi
+
+%include <tail.h>
