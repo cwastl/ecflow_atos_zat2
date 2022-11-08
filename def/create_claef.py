@@ -36,10 +36,10 @@ members = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 #members = [0]
 
 # forecasting range
-fcst = 60
+fcst = 48
 
 # forecasting range control member
-fcstctl = 84
+fcstctl = 48
 
 # coupling frequency
 couplf = 1
@@ -330,7 +330,6 @@ def family_main():
       Edit(
          ASSIM=assimi,
          LEADT=fcst,
-         SEDA=seda,
          PERTS=pertsurf,
          ARCHIV=arch,
          TRANSF=trans),
@@ -349,7 +348,7 @@ def family_main():
                      NP=16,
                      NPRGPNS=16,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="927_{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -367,7 +366,7 @@ def family_main():
                      NP=1,
                      NPRGPNS=1,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="927surf{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -457,6 +456,7 @@ def family_main():
                      NPRGPNS=1,
                      NPRGPEW=1,
                      CLASS='tf',
+                     SEDA=seda,
                      NAME="screensurf{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -475,8 +475,7 @@ def family_main():
                      NP=1,
                      NPRGPNS=1,
                      NPRGPEW=1,
-                     CLASS='tf',
-                     SEDA=seda,
+                     CLASS='nf',
                      NAME="canari{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -527,10 +526,10 @@ def family_main():
                   Event("e"),
                   Edit(
                      MEMBER="{:02d}".format(mem),
-                     NP=384,
-                     NPRGPNS=16,
-                     NPRGPEW=24,
-                     CLASS='tp',
+                     NP=96,
+                     NPRGPNS=8,
+                     NPRGPEW=12,
+                     CLASS='np',
                      STOCH=stophy,
                      PERTSU=pertsurf,
                      STEPS15=step15,
@@ -553,7 +552,7 @@ def family_main():
                      NP=1,
                      NPRGPNS=1,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      STEPS15=step15,
                      NAME="progrid{:02d}".format(mem),
                   ),
@@ -572,7 +571,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      STEPS15=step15,
                      NAME="addgrib{:02d}".format(mem),
                      BLOCKS=blocks,
@@ -717,7 +716,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o00_1'],timing['o00_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_03",
@@ -728,7 +726,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o03_1'],timing['o03_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_06",
@@ -739,7 +736,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o06_1'],timing['o06_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_09",
@@ -750,18 +746,16 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o09_1'],timing['o09_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_12",
-                   Edit( LAUF='12',VORHI=6, LEAD=fcst, LEADCTL=fcstctl ),
+                   Edit( LAUF='12',VORHI=6, LEAD=assimc, LEADCTL=assimc ),
 
                    # add suite Families and Tasks
                    family_dummy(timing['c12_1'],timing['c12_2']),
                    family_cleaning(),
                    family_obs(timing['o12_1'],timing['o12_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_15",
@@ -772,7 +766,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o15_1'],timing['o15_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
                 Family("RUN_18",
@@ -783,7 +776,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o18_1'],timing['o18_2']),
                    family_main(),
-                   family_mirror(),
                ),
 
                 Family("RUN_21",
@@ -794,7 +786,6 @@ defs = Defs().add(
                    family_cleaning(),
                    family_obs(timing['o21_1'],timing['o21_2']),
                    family_main(),
-                   family_mirror(),
                 ),
 
             )
