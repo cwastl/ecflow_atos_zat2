@@ -130,7 +130,7 @@ ectrans -gateway ecaccess.zamg.ac.at -remote ${fectrans} -get -source /EGVAP/OBS
 ectrans -gateway ecaccess.zamg.ac.at -remote ${fectrans} -get -source /../../modelle/prod/mgruppe/OBS/ODB/${date}/bufr.temp_${date}${run} -overwrite -verbose
 
 #CEILOMETER
-ectrans -gateway ecaccess.zamg.ac.at -remote ${fectrans} -get -source /../../nwp_modelle/OBSERVATIONS/CEILOMETER/${date}/obsoul_6_qc_${date}_${run}00.asc -overwrite -verbose
+ectrans -gateway ecaccess.zamg.ac.at -remote nwpmodelle -get -source /../../../OBSERVATIONS/CEILOMETER/${date}/obsoul_6_qc_${date}_${run}00.asc -overwrite -verbose
 
 if [[ ${TRANSOK} -ge 1 ]]
 then

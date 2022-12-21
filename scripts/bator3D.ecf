@@ -77,6 +77,10 @@ export MALLOC_CHECK_=0
 rm -f $OBSDIR3D/*
 cd $OBSDIR3D
 
+cp ${OBSDIR}/bufr.temp_* .
+cp ${OBSDIR}/ascat_* .
+cp ${OBSDIR}/obsoul_* .
+
 if [ -s $OBSFILE1 ]; then
   export OBSFILEZAMG=$OBSFILE1
   ecflow_client --label=info "ZAMG SYNOP+TAWES file there"
@@ -140,7 +144,7 @@ if (( $flag>0 )) ; then
  
   #### BUFR TEMPS #############
   rm -f ${OBSDIR3D}/bufr.temp
-  #touch ${OBSDIR3D}/bufr.temp
+  touch ${OBSDIR3D}/bufr.temp
   if [[ -s ${OBSDIR3D}/bufr.temp_${date}${run} ]]
   then
      cat ${OBSDIR3D}/bufr.temp_${date}${run} >>${OBSDIR3D}/bufr.temp
