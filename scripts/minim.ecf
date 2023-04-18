@@ -75,8 +75,10 @@ while (( $ii < $assimm )); do
    AT=$(python3 -c "import random; random.seed($adate4); zufall=random.sample(range(1,17),$assimm); print(str(zufall[$ii]).zfill(2))")
    if [[ $AT == *$mem* ]]
    then
-      ecflow_client --label=info "No 3DVAR for this member"
-      assimili=.FALSE.
+      #ecflow_client --label=info "No 3DVAR for this member"
+      #assimili=.FALSE.
+      ecflow_client --label=info "Ceilometer on for this member"
+      NAMELMINIM=${NAMELDIR}/namelist_minim_cy43t2_ceilo
    fi
    (( ii = $ii + 1 ))
 done
@@ -276,6 +278,6 @@ then
 fi
 
 cd ${MINIMDIR}
-rm -rf ${RUNDIR}
+#rm -rf ${RUNDIR}
 
 %include <tail.h>

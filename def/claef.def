@@ -5,7 +5,7 @@ suite claef
   edit ECF_HOME '/home/zat2/CLAEF/suite'
   edit ECF_INCLUDE '/home/zat2/CLAEF/suite/include'
   edit ECF_TRIES '2'
-  edit STHOST 'ws1'
+  edit STHOST 'ws2'
   edit SCHOST 'hpc'
   edit USER 'zat2'
   edit ACCOUNT 'atlaef'
@@ -13,9 +13,9 @@ suite claef
   edit KOPPLUNG '1'
   edit ASSIMC '3'
   edit NIO '0'
-  edit ECF_JOB_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%'
-  edit ECF_KILL_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml kill %SCHOST% %ECF_JOB%'
-  edit ECF_STATUS_CMD 'troika -c /home/%USER%/CLAEF/suite/include/troika.yml monitor %SCHOST% %ECF_JOB%'
+  edit ECF_JOB_CMD 'STHOST=%STHOST% troika submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%'
+  edit ECF_KILL_CMD 'STHOST=%STHOST% troika kill %SCHOST% %ECF_JOB%'
+  edit ECF_STATUS_CMD 'STHOST=%STHOST% troika monitor %SCHOST% %ECF_JOB%'
   family admin
     task cleanlog
       edit NAME 'cleanlog'
@@ -54,7 +54,7 @@ suite claef
     endfamily
   endfamily
   family runs
-    repeat date DATUM 20221108 20221231 1
+    repeat date DATUM 20230418 20231231 1
     task dummy
       defstatus suspended
       edit NP '1'

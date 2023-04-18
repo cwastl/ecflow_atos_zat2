@@ -76,7 +76,7 @@ n_io_serv=0
 # SBU account, cluster and user name, logport
 account = "atlaef";
 schost  = "hpc";
-sthost  = "ws1";
+sthost  = "ws2";
 user    = "zat2";
 
 # main runs time schedule
@@ -126,7 +126,7 @@ anzmem = len(members)
 # date to start the suite
 start_date = int(now.strftime('%Y%m%d'))
 #start_date = 20220504
-end_date = 20221231
+end_date = 20231231
 
 ###########################################
 #####define Families and Tasks#############
@@ -653,9 +653,9 @@ defs = Defs().add(
                 ASSIMC=assimc,
                 NIO=n_io_serv,
  
-                ECF_JOB_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%',
-                ECF_KILL_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml kill %SCHOST% %ECF_JOB%',
-                ECF_STATUS_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml monitor %SCHOST% %ECF_JOB%',
+                ECF_JOB_CMD='STHOST=%STHOST% troika submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%',
+                ECF_KILL_CMD='STHOST=%STHOST% troika kill %SCHOST% %ECF_JOB%',
+                ECF_STATUS_CMD='STHOST=%STHOST% troika monitor %SCHOST% %ECF_JOB%',
 
              ),
 

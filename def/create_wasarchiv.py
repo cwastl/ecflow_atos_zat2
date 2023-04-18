@@ -71,7 +71,7 @@ debug = 0;
 # date to start the suite
 start_date = int(now.strftime('%Y%m%d'))
 #start_date = 20190415
-end_date = 20221231
+end_date = 20241231
 
 ###########################################
 #####define Families and Tasks#############

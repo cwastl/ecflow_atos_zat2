@@ -42,12 +42,7 @@ then
       if [ -z "$checkf" ]
       then
 
-         if [[ ${run} == "00" ]]
-         then
-            leadtime=60
-         else
-            leadtime=48
-         fi
+         leadtime=60
 
          if [[ ${mem} == "00" ]]
          then
