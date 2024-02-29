@@ -6,11 +6,11 @@ suite = "wasarchiv"
 runs = ["00","12"]
 ofamil = ["admin","runs"]
 famil = ["main"]
-members = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"]
+members = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17"]
 tasks_comp = ["complete"]
 tasks_clean = ["cleaning"]
 tasks_trig = ["gettrig"]
-tasks_main = ["copy","mv2ecfs"]
+tasks_main = ["copy","mv2ecfs","copy_1k","mv2ecfs_1k"]
 
 hpath="/home/zat2/CLAEF/suite/"
 

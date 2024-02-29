@@ -1,0 +1,150 @@
+%manual
+TASK:
+    claef/runs/RUN_[HH]/main/MEM_[MM]/copy
+
+    [HH]=00,12; [MM]=00,01,..,16
+
+DESCRIPTION:
+    This task copies files to be archived to scratch directory
+
+SOURCE:
+    '~zat2/CLAEF/suite/scripts_wasarchiv/copy_1k.ecf'
+
+TRIGGER:
+    time dependency (09:00, 21:00)
+
+MAIN FRAME:
+    aa/ab/ac/ad (see variable SCHOST)
+
+%end
+
+%include <sbatch.h>
+%include <head.h>
+%include <ompi.h>
+
+set +e
+
+date=%DATUM%
+run=%LAUF%
+mem=%MEMBER%
+lagg=%VORHI%
+couplfr=%KOPPLUNG%
+assimc=%ASSIMC%
+files=%STHOST_1k%
+user=zat2
+
+if [ -s /ec/${files}/tc/${user}/tcwork/CLAEF/ARCHIV/archiv.txt ]
+then
+
+   while IFS=" " read date run; do
+
+      checkf=$(els ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF_1k/MEM_${mem})
+      if [ -z "$checkf" ]
+      then
+
+         if [[ ${mem} == "00" ]]
+         then
+            leadtime=%LEADCTL%
+         else 
+            leadtime=%LEAD%
+         fi
+
+         # report to ecflow
+         ecflow_client --label=run "The date is now ${date} ${run}"
+         ecflow_client --label=info "Archive $date $run"
+
+         ##################################Run setup script for environment################################
+         . /ec/${files}/tc/zat2/home/CLAEF/SCR/setup_cy43.ksh $run $date $mem $lagg $assimc $user $files
+         ##################################################################################################
+
+         DATAPATH=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p1date}/${p1run}/MEM_${mem}
+         # Create working directory
+         RUNDIR=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/MEM_${mem}
+         [[ ! -d ${RUNDIR} ]] && mkdir -p ${RUNDIR}
+         cd ${RUNDIR}
+
+         rm -rf ${RUNDIR}/*
+
+         ecflow_client --label=info "Copying first guess"
+         # Create guess directory
+         [[ ! -d ${RUNDIR}/GUESS ]] && mkdir -p ${RUNDIR}/GUESS
+         cd ${RUNDIR}/GUESS
+         if [ -f ${DATAPATH}/001/ICMSHAROM+0003 ]
+         then
+            cp ${DATAPATH}/001/ICMSHAROM+0003 .
+         fi
+
+         if [ -f /ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 ]
+         then
+            cp /ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 .
+         fi
+
+         ecflow_client --label=info "Copying soil guess"
+         if [ -f  ${DATAPATH}/001/ICMSHAROM+0003.sfx ]
+         then
+            cp ${DATAPATH}/001/ICMSHAROM+0003.sfx .
+         fi
+
+         ecflow_client --label=info "Copying Canari"
+         # Create canari directory
+         [[ ! -d ${RUNDIR}/CANARI ]] && mkdir -p ${RUNDIR}/CANARI
+         cd ${RUNDIR}/CANARI
+
+         if [ -f ${DATAPATH}/CANARI/ICMSHCYCL+0000.sfx ] ; then
+
+            cp ${DATAPATH}/CANARI/ICMSHCYCL+0000.sfx .
+
+         fi
+
+         ecflow_client --label=info "Copying Minim"
+         # Create minim directory
+         [[ ! -d ${RUNDIR}/MINIMIZATION ]] && mkdir -p ${RUNDIR}/MINIMIZATION
+         cd ${RUNDIR}/MINIMIZATION
+
+         if [ -f ${DATAPATH}/MINIMIZATION/MXMINI999+0000_blend ] ; then
+
+            cp ${DATAPATH}/MINIMIZATION/MXMINI999+0000_blend .
+
+         fi
+
+         ecflow_client --label=info "Copying Pertsurf"
+         # Create pertsurf directory
+         [[ ! -d ${RUNDIR}/PERTSURF ]] && mkdir -p ${RUNDIR}/PERTSURF
+         cd ${RUNDIR}/PERTSURF
+
+         if [ -f ${DATAPATH}/PERTSURF/analyse.sfx ] ; then
+
+            cp ${DATAPATH}/PERTSURF/analyse.sfx .
+
+         fi
+
+         ecflow_client --label=info "ELSC"
+         # Create 927 directory
+         [[ ! -d ${RUNDIR}/927 ]] && mkdir -p ${RUNDIR}/927
+         cd ${RUNDIR}/927
+
+         if [ -f ${DATAPATH}/927/ELSCFAROMALBC000 ] ; then
+
+            cp ${DATAPATH}/927/ELSCFAROMALBC000 .
+
+         fi
+
+  
+      else
+
+         ecflow_client --label=info "$date $run already archived"
+         RUNDIR=/ec/${files}/tc/${user}/tcwork/CLAEF/ARCHIV/${date}/${run}/MEM_${mem}
+
+      fi
+
+   done < /ec/${files}/tc/${user}/tcwork/CLAEF/ARCHIV/archiv.txt 
+
+   cd ${RUNDIR}
+
+else
+
+   ecflow_client --label=info "No archive for $date $run"
+
+fi
+
+%include <tail.h>

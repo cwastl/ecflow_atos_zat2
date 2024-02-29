@@ -140,7 +140,7 @@ def family_operator():
          Task("switch_sthost",
              Edit(
                 NP=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="switch_st",
              ),
              Label("info", ""),
@@ -163,7 +163,7 @@ def family_dummy(startc1,startc2):
                Task("dummy1",
                   Edit(
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="dummy1",
                   ),
                   Label("run", ""),
@@ -184,7 +184,7 @@ def family_dummy(startc1,startc2):
                   Complete("../../obs == complete"),
                   Edit(
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="dummy2",
                   ),
                   Label("run", ""),
@@ -205,7 +205,7 @@ def family_dummy(startc1,startc2):
                   Complete("../../main == complete"),
                   Edit(
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="dummy2",
                   ),
                   Label("run", ""),
@@ -223,7 +223,7 @@ def family_cleaning():
              Trigger("dummy/ez_trigger/dummy1 == complete"),
              Edit(
                 NP=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="cleaning",
                 ANZMEMB=anzmem,
              ),
@@ -238,7 +238,7 @@ def family_mirror():
              Trigger("main == complete"),
              Edit(
                 NP=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="mirror",
                 ANZMEMB=anzmem,
              ),
@@ -262,7 +262,7 @@ def family_obs(starto1,starto2):
              Meter("obsprog", -1, 3, 3),
              Edit(
                 NP=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="getobs",
              ),
              Label("run", ""),
@@ -277,7 +277,7 @@ def family_obs(starto1,starto2):
              Complete(":ASSIM == 1 and getobs:obsprog == 0 or :ASSIM == 0"),
              Edit(
                 NP=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="pregps",
              ),
              Label("run", ""),
@@ -295,7 +295,7 @@ def family_obs(starto1,starto2):
                 NP=1,
                 NPRGPNS=1,
                 NPRGPEW=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="bator",
              ),
              Label("run", ""),
@@ -313,7 +313,7 @@ def family_obs(starto1,starto2):
                 NP=1,
                 NPRGPNS=1,
                 NPRGPEW=1,
-                CLASS='tf',
+                CLASS='nf',
                 NAME="bator3D",
              ),
              Label("run", ""),
@@ -383,7 +383,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="sstex{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -401,7 +401,7 @@ def family_main():
                      NP=1,
                      NPRGPNS=1,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="addsurf{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -417,7 +417,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="varbccomb{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -435,7 +435,8 @@ def family_main():
                      NP=36,
                      NPRGPNS=36,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     NNODES=2,
+                     CLASS='np',
                      EDA=eda,
                      NAME="screen{:02d}".format(mem),
                   ),
@@ -455,7 +456,7 @@ def family_main():
                      NP=1,
                      NPRGPNS=1,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      SEDA=seda,
                      NAME="screensurf{:02d}".format(mem),
                   ),
@@ -493,7 +494,8 @@ def family_main():
                      NP=36,
                      NPRGPNS=36,
                      NPRGPEW=1,
-                     CLASS='tf',
+                     CLASS='np',
+                     NNODES='2',
                      ASSIMM=assimm,
                      ENSJK=enjk,
                      NAME="minim{:02d}".format(mem),
@@ -511,7 +513,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="pertsurf{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -590,7 +592,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      STEPS15=step15,
                      NAME="transfer{:02d}".format(mem),
                      BLOCKS=blocks,
@@ -609,7 +611,7 @@ def family_main():
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="archmars{:02d}".format(mem),
                      ANZMEMB=anzmem,
                   ),
@@ -663,26 +665,26 @@ defs = Defs().add(
 
                 # Task clean logfile
                 Task("cleanlog",Date("28.*.*"),Time(timing['clean']),
-                   Edit(NAME="cleanlog", CLASS="tf", NP=1),
+                   Edit(NAME="cleanlog", CLASS="nf", NP=1),
                    Label("info", ""),
                 ),
 
                 # Task complete if something went wrong on the previous day
                 Task("complete", Cron(timing['comp']),
-                   Edit( NAME="complete", CLASS="tf", NP=1, SUITENAME=suite_name ),
+                   Edit( NAME="complete", CLASS="nf", NP=1, SUITENAME=suite_name ),
                    Label("info", ""),
                 ),
 
                 # Task dummy3
                 Task("dummy3",
-                   Edit(NAME="dummy3", CLASS="tf", NP=1 ),
+                   Edit(NAME="dummy3", CLASS="nf", NP=1 ),
                    Label("info", ""),
                    Defstatus("suspended"),
                 ),
 
                 # Task dummy4
                 Task("dummy4", Cron(timing["c00_3"]),Trigger("dummy3 == complete"),
-                   Edit(NAME="dummy4", CLASS='tf', NP=1 ),
+                   Edit(NAME="dummy4", CLASS='nf', NP=1 ),
                    Label("info", ""),
                ),
 
@@ -699,7 +701,7 @@ defs = Defs().add(
                 Task("dummy",
                   Edit(
                      NP=1,
-                     CLASS='tf',
+                     CLASS='nf',
                      NAME="dummy",
                   ),
                   Label("run", ""),

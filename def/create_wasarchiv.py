@@ -32,7 +32,7 @@ schedule = "/usr/local/apps/schedule/1.4/bin/schedule";
 suite_name = "wasarchiv"
 
 #ensemble members
-members = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+members = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
 #members = [0,1]
 
 # forecasting range
@@ -53,7 +53,8 @@ assimc = 3      #assimilation cycle in hours
 # SBU account, cluster and user name, logport
 account = "atlaef";
 schost  = "hpc";
-sthost  = "ws1";
+sthost  = "ws2";
+sthost_1k = "ws2";
 user    = "zat2";
 
 # main runs time schedule
@@ -115,11 +116,11 @@ def family_main(starttime1,starttime2):
       # Family MEMBER
       [
          Family("MEM_{:02d}".format(mem),
-
-            # Task copy to sc1
+            # Task copy to ws1
             [
                Task("copy",
                   Trigger("../gettrig == complete"),
+                  Complete(":MEMBER == 17"),
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
@@ -136,11 +137,46 @@ def family_main(starttime1,starttime2):
             [
                Task("mv2ecfs",
                   Trigger("copy == complete"),
+                  Complete(":MEMBER == 17"),
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
                      CLASS='tf',
                      NAME="mv2ecfs_{:02d}".format(mem),
+                  ),
+                  Label("run", ""),
+                  Label("info", ""),
+                  Label("error", "")
+               )
+            ],
+
+            # Task copy_1k to ws1
+            [
+               Task("copy_1k",
+                  Trigger("../gettrig == complete"),
+           #       Complete(":LAUF == 12"),
+                  Edit(
+                     MEMBER="{:02d}".format(mem),
+                     NP=1,
+                     CLASS='tf',
+                     NAME="copy_1k_{:02d}".format(mem),
+                  ),
+                  Label("run", ""),
+                  Label("info", ""),
+                  Label("error", "")
+               )
+            ],
+
+            # Task save to ECFS
+            [
+               Task("mv2ecfs_1k",
+                  Trigger("copy_1k == complete"),
+           #       Complete(":LAUF == 12"),
+                  Edit(
+                     MEMBER="{:02d}".format(mem),
+                     NP=1,
+                     CLASS='tf',
+                     NAME="mv2ecfs_1k_{:02d}".format(mem),
                   ),
                   Label("run", ""),
                   Label("info", ""),
@@ -173,6 +209,7 @@ defs = Defs().add(
 
                 # suite configuration variables
                 STHOST=sthost,
+                STHOST_1k=sthost_1k,
                 SCHOST=schost,
                 USER=user,
                 ACCOUNT=account,
@@ -225,7 +262,7 @@ defs = Defs().add(
                 ),
 
                 Family("RUN_12",
-                   Edit( LAUF='12',VORHI=6, LEAD=48, LEADCTL=48 ),
+                   Edit( LAUF='12',VORHI=6, LEAD=fcst, LEADCTL=fcstctl ),
    
                    # add suite Families and Tasks
                    family_main(timing['o12_1'],timing['o12_2']),

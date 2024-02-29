@@ -28,7 +28,7 @@ assimc=%ASSIMC%
 files=%STHOST%
 user=%USER%
 
-if [ -s /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
+if [ -s /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
 then
 
    while IFS=" " read date run; do
@@ -53,13 +53,13 @@ then
 
       fi
 
-   done < /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
+   done < /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
 
    ecflow_client --label=info "Remove archiv.txt"
-   rm -f /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
+   rm -f /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt
 
    ecflow_client --label=info "Remove trigger.txt"
-   rm -f /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/trigger.txt
+   rm -f /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/trigger.txt
 
 else
 

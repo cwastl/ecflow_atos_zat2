@@ -33,20 +33,21 @@ assimc=%ASSIMC%
 files=%STHOST%
 user=zat
 
-if [ -s /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
+if [ -s /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
 then
 
    while IFS=" " read date run; do
 
-      checkf=$(els ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/MEM_${mem})
+      checkf=$(els ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF/MEM_${mem})
       if [ -z "$checkf" ]
       then
 
-         leadtime=60
-
+         
          if [[ ${mem} == "00" ]]
          then
             leadtime=%LEADCTL%
+         else 
+            leadtime=%LEAD%
          fi
 
          # report to ecflow
@@ -187,7 +188,7 @@ then
 
       fi
 
-   done < /ec/ws1/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt 
+   done < /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt 
 
    cd ${RUNDIR}
 

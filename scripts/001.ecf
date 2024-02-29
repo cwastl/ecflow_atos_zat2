@@ -212,7 +212,9 @@ then
       -e   "s/{inhydro}/${INHYDRO}/"\
       -e   "s/NFRPOS=60,/NFRPOS=${steps},/"\
       -e   "s/ ! CNPPATH='.',/  CNPPATH='.',/"\
-      -e   "s/{fcstrange}/${leadtime}/g" ${NAMEL001}_spp+spg > $RUNDIR/fort.4
+      -e   "s/{fcstrange}/${leadtime}/g" ${NAMEL001} > $RUNDIR/fort.4
+
+  ln -sf ${NAMEL001SURFEX} $RUNDIR/EXSEG2.nam
 
 else
 
@@ -250,15 +252,18 @@ else
       -e   "s/NFRPOS=60,/NFRPOS=${steps},/"\
       -e   "s/ ! CNPPATH='.',/  CNPPATH='.',/"\
       -e   "s/SLHDEPSH=0.040/SLHDEPSH=${AT2}/"\
-      -e   "s/{fcstrange}/${leadtime}/g" ${NAMEL001}_spp+spg > $RUNDIR/fort.4
+      -e   "s/{fcstrange}/${leadtime}/g" ${NAMEL001} > $RUNDIR/fort.4
+
+!  sed -e "s/XFRACZ0=10.,/XFRACZ0=5.,/g" ${NAMEL001SURFEX} > $RUNDIR/EXSEG2.nam
+  ln -sf ${NAMEL001SURFEX} $RUNDIR/EXSEG2.nam
 
 fi  
 
 if [[ $mem == "00" || $pertsurf -eq 0 ]]
 then
-  ln -sf ${NAMEL001SURFEX} $RUNDIR/EXSEG1.nam
+  ln -sf  $RUNDIR/EXSEG2.nam $RUNDIR/EXSEG1.nam
 else
-  sed -e "s/LPERTSURF=.F./LPERTSURF=${lpertl}/g" ${NAMEL001SURFEX} > $RUNDIR/EXSEG1.nam
+  sed -e "s/LPERTSURF=.F./LPERTSURF=${lpertl}/g" $RUNDIR/EXSEG2.nam > $RUNDIR/EXSEG1.nam
 fi
 
 ecflow_client --label=info "Run 001"

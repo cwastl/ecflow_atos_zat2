@@ -8,7 +8,7 @@ DESCRIPTION:
     This task archives C-LAEF Files in MARS
 
 SOURCE:
-    '~zat2/CLAEF/suite/scripts_wasarchiv/mv2ecfs.ecf'
+    '~zat2/CLAEF/suite/scripts_wasarchiv/mv2ecfs_1k.ecf'
 
 TRIGGER:
     claef/runs/RUN_[HH]/main/MEM_[MM]/copy == complete
@@ -27,15 +27,15 @@ set +e
 date=%DATUM%
 run=%LAUF%
 mem=%MEMBER%
-files=%STHOST%
-user=%USER%
+files=%STHOST_1k%
+user=zat2
 
 if [ -s /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/archiv.txt ]
 then
 
    while IFS=" " read date run; do
 
-      checkf=$(els ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF1/MEM_${mem})
+      checkf=$(els ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF_1k/MEM_${mem})
       if [ -z "$checkf" ]
       then
 
@@ -46,10 +46,10 @@ then
          #############################Run setup script for environment#################################
          #. /ec/${files}/tc/${user}/home/CLAEF/SCR/setup_cy43.ksh $run $date $mem 999 999 $user $files#
          ##############################################################################################
-        
-         ECFSPATH=ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF/MEM_${mem}
 
-         cd /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/${date}/${run}/MEM_${mem}
+         DATAPATH=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/MEM_${mem}
+         ECFSPATH=ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF_1k/MEM_${mem}
+         cd ${DATAPATH}
 
          ecflow_client --label=info "Create directory on ECFS"
          emkdir -p ${ECFSPATH}
@@ -74,27 +74,10 @@ then
          ecp -n PERTSURF.tar.gz ${ECFSPATH}
          rm -f PERTSURF.tar.gz
 
-         ecflow_client --label=info "Copying coupl to ECFS"
-         tar -czvf COUPL.tar.gz COUPL
-         ecp -n COUPL.tar.gz ${ECFSPATH}
-         rm -f COUPL.tar.gz
-
-         if [ -s /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/trigger.txt ]
-         then
-
-            if [ $mem == "00" ]
-            then
-
-               ecflow_client --label=info "Copying trigger.txt"
-               ecp -n /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV/trigger.txt ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/
-
-            else
-
-               ecflow_client --label=info "Only for member 00"
-
-            fi
-
-         fi
+         ecflow_client --label=info "Copying 927 to ECFS"
+         tar -czvf 927.tar.gz 927
+         ecp -n 927.tar.gz ${ECFSPATH}
+         rm -f 927.tar.gz
 
       else
 

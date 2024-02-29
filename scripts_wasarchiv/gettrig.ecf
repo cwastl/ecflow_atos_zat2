@@ -37,7 +37,9 @@ fectrans=claef_archiv
 ecflow_client --label=run "The date is now ${date} ${run}"
 ecflow_client --label=info "Get trigger file"
 
-cd /ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV
+RUNDIR=/ec/${files}/tc/zat2/tcwork/CLAEF/ARCHIV
+[[ ! -d ${RUNDIR} ]] && mkdir -p ${RUNDIR}
+cd ${RUNDIR}
 
 ectrans -gateway ecaccess.zamg.ac.at -remote ${fectrans} -get -source archiv.txt -remove -overwrite -verbose
 ectrans -gateway ecaccess.zamg.ac.at -remote ${fectrans} -get -source trigger.txt -remove -overwrite -verbose
