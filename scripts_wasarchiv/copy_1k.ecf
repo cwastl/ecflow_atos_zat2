@@ -58,6 +58,7 @@ then
          ##################################################################################################
 
          DATAPATH=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p1date}/${p1run}/MEM_${mem}
+         DATAPATHA=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${date}/${run}/MEM_${mem}
          # Create working directory
          RUNDIR=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/MEM_${mem}
          [[ ! -d ${RUNDIR} ]] && mkdir -p ${RUNDIR}
@@ -90,9 +91,9 @@ then
          [[ ! -d ${RUNDIR}/CANARI ]] && mkdir -p ${RUNDIR}/CANARI
          cd ${RUNDIR}/CANARI
 
-         if [ -f ${DATAPATH}/CANARI/ICMSHCYCL+0000.sfx ] ; then
+         if [ -f ${DATAPATHA}/CANARI/ICMSHCYCL+0000.sfx ] ; then
 
-            cp ${DATAPATH}/CANARI/ICMSHCYCL+0000.sfx .
+            cp ${DATAPATHA}/CANARI/ICMSHCYCL+0000.sfx .
 
          fi
 
@@ -101,9 +102,9 @@ then
          [[ ! -d ${RUNDIR}/MINIMIZATION ]] && mkdir -p ${RUNDIR}/MINIMIZATION
          cd ${RUNDIR}/MINIMIZATION
 
-         if [ -f ${DATAPATH}/MINIMIZATION/MXMINI999+0000_blend ] ; then
+         if [ -f ${DATAPATHA}/MINIMIZATION/MXMINI999+0000_blend ] ; then
 
-            cp ${DATAPATH}/MINIMIZATION/MXMINI999+0000_blend .
+            cp ${DATAPATHA}/MINIMIZATION/MXMINI999+0000_blend .
 
          fi
 
@@ -112,9 +113,9 @@ then
          [[ ! -d ${RUNDIR}/PERTSURF ]] && mkdir -p ${RUNDIR}/PERTSURF
          cd ${RUNDIR}/PERTSURF
 
-         if [ -f ${DATAPATH}/PERTSURF/analyse.sfx ] ; then
+         if [ -f ${DATAPATHA}/PERTSURF/analyse.sfx ] ; then
 
-            cp ${DATAPATH}/PERTSURF/analyse.sfx .
+            cp ${DATAPATHA}/PERTSURF/analyse.sfx .
 
          fi
 
@@ -123,13 +124,19 @@ then
          [[ ! -d ${RUNDIR}/927 ]] && mkdir -p ${RUNDIR}/927
          cd ${RUNDIR}/927
 
-         if [ -f ${DATAPATH}/927/ELSCFAROMALBC000 ] ; then
+         i=0
+         while (( $i <= $leadtime )) ; do
 
-            cp ${DATAPATH}/927/ELSCFAROMALBC000 .
+            jj=$(printf "%%03d" $i)
+            if [ -f ${DATAPATHA}/927/ELSCFAROMALBC$jj ] ; then
 
-         fi
+               cp ${DATAPATHA}/927/ELSCFAROMALBC$jj .
 
-  
+            fi
+            (( i=$i+$couplfr ))
+
+         done
+
       else
 
          ecflow_client --label=info "$date $run already archived"
