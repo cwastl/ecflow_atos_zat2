@@ -59,12 +59,34 @@ then
 
          DATAPATH=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p1date}/${p1run}/MEM_${mem}
          DATAPATHA=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${date}/${run}/MEM_${mem}
+         OBSPATHA=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${date}/${run}
+
+         # Create obs working directory
+         if [[ ${mem} == "00" ]]
+         then
+            RUNDIRO=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/OBSERVATIONS
+            [[ ! -d ${RUNDIRO} ]] && mkdir -p ${RUNDIRO}
+            cd ${RUNDIRO}
+
+            rm -rf ${RUNDIRO}/*
+         
+            ecflow_client --label=info "Copying Obs"
+            # Create Obs directory
+            if [ -d ${OBSPATHA}/OBSERVATIONS ] ; then
+
+               cp -r ${OBSPATHA}/OBSERVATIONS/* .
+
+            fi
+
+         fi
+
          # Create working directory
          RUNDIR=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/MEM_${mem}
          [[ ! -d ${RUNDIR} ]] && mkdir -p ${RUNDIR}
          cd ${RUNDIR}
 
          rm -rf ${RUNDIR}/*
+
 
          ecflow_client --label=info "Copying first guess"
          # Create guess directory
@@ -84,6 +106,17 @@ then
          if [ -f  ${DATAPATH}/001/ICMSHAROM+0003.sfx ]
          then
             cp ${DATAPATH}/001/ICMSHAROM+0003.sfx .
+         fi
+
+         ecflow_client --label=info "Copying Addsurf"
+         # Create addsurf directory
+         [[ ! -d ${RUNDIR}/ADDSURF ]] && mkdir -p ${RUNDIR}/ADDSURF
+         cd ${RUNDIR}/ADDSURF
+
+         if [ -f ${DATAPATHA}/ADDSURF/ICMSHAROM+3_addsurf ] ; then
+
+            cp ${DATAPATHA}/ADDSURF/ICMSHAROM+3_addsurf .
+
          fi
 
          ecflow_client --label=info "Copying Canari"

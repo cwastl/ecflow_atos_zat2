@@ -84,7 +84,7 @@ def family_cleaning():
              Trigger("main == complete"),
              Edit(
                 NP=1,
-                CLASS='nf',
+                CLASS='tf',
                 NAME="cleaning",
              ),
              Label("run", ""),
@@ -103,7 +103,7 @@ def family_main(starttime1,starttime2):
          Task("gettrig",
             Edit(
                NP=1,
-               CLASS='nf',
+               CLASS='tf',
                NAME="gettrig",
             ),
             Label("run", ""),
@@ -124,7 +124,7 @@ def family_main(starttime1,starttime2):
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='nf',
+                     CLASS='tf',
                      NAME="copy_{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -141,7 +141,7 @@ def family_main(starttime1,starttime2):
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='nf',
+                     CLASS='tf',
                      NAME="mv2ecfs_{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -158,7 +158,7 @@ def family_main(starttime1,starttime2):
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='nf',
+                     CLASS='tf',
                      NAME="copy_1k_{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -175,7 +175,7 @@ def family_main(starttime1,starttime2):
                   Edit(
                      MEMBER="{:02d}".format(mem),
                      NP=1,
-                     CLASS='nf',
+                     CLASS='tf',
                      NAME="mv2ecfs_1k_{:02d}".format(mem),
                   ),
                   Label("run", ""),
@@ -219,9 +219,9 @@ defs = Defs().add(
                 KOPPLUNG=couplf,
                 ASSIMC=assimc,
 
-                ECF_JOB_CMD='troika submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%',
-                ECF_KILL_CMD='troika kill %SCHOST% %ECF_JOB%',
-                ECF_STATUS_CMD='troika monitor %SCHOST% %ECF_JOB%',
+                ECF_JOB_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml submit -o %ECF_JOBOUT% %SCHOST% %ECF_JOB%',
+                ECF_KILL_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml kill %SCHOST% %ECF_JOB%',
+                ECF_STATUS_CMD='troika -c /home/%USER%/CLAEF/suite/include/troika.yml monitor %SCHOST% %ECF_JOB%',
 
              ),
 
@@ -229,7 +229,7 @@ defs = Defs().add(
 
                 # Task complete if something went wrong on the previous day
                 Task("complete", Cron(timing['comp']),
-                   Edit( NAME="complete", CLASS="nf", NP=1, SUITENAME=suite_name ),
+                   Edit( NAME="complete", CLASS="tf", NP=1, SUITENAME=suite_name ),
                    Label("run", ""),
                    Label("info", ""),
                 ),
@@ -244,7 +244,7 @@ defs = Defs().add(
                 Task("dummy",
                   Edit(
                      NP=1,
-                     CLASS='nf',
+                     CLASS='tf',
                      NAME="dummy",
                   ),
                   Label("run", ""),

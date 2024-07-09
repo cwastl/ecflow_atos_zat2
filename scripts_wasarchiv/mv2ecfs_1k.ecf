@@ -48,16 +48,34 @@ then
          ##############################################################################################
 
          DATAPATH=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}/MEM_${mem}
+         DATAPATHO=/ec/${files}/tc/${user}/tcwork/CLAEF_1k/ARCHIV/${date}/${run}
          ECFSPATH=ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF_1k/MEM_${mem}
-         cd ${DATAPATH}
+         ECFSPATHO=ec:ZAMG_ARCHIVE/2016_01/WASARCHIV/${date}/${run}/CLAEF_1k
 
          ecflow_client --label=info "Create directory on ECFS"
          emkdir -p ${ECFSPATH}
 
+         if [[ ${mem} == "00" ]]
+         then
+
+            cd ${DATAPATHO}
+            ecflow_client --label=info "Copying obs to ECFS"
+            tar -czvf OBSERVATIONS.tar.gz OBSERVATIONS
+            ecp -n OBSERVATIONS.tar.gz ${ECFSPATHO}
+            rm -f OBSERVATIONS.tar.gz
+
+         fi
+
+         cd ${DATAPATH}
          ecflow_client --label=info "Copying guess to ECFS"
          tar -czvf GUESS.tar.gz GUESS
          ecp -n GUESS.tar.gz ${ECFSPATH}
          rm -f GUESS.tar.gz
+
+         ecflow_client --label=info "Copying addsurf to ECFS"
+         tar -czvf ADDSURF.tar.gz ADDSURF
+         ecp -n ADDSURF.tar.gz ${ECFSPATH}
+         rm -f ADDSURF.tar.gz
 
          ecflow_client --label=info "Copying Canari to ECFS"
          tar -czvf CANARI.tar.gz CANARI
