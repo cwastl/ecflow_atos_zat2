@@ -41,15 +41,27 @@ then
       ###############################################################################################
 
       RUNDIR=/${files}/tcwork/${user}/lb/CLAEF/ARCHIV/${date}
+      RUNDIR_1k=/${files}/tcwork/${user}/lb/CLAEF_1k/ARCHIV/${date}
 
       if [ -d ${RUNDIR} ] ; then
 
-         ecflow_client --label=info "Cleaning ${date}"
+         ecflow_client --label=info "Cleaning CLAEF ${date}"
          rm -rf ${RUNDIR}
 
       else
 
-         ecflow_client --label=info "${date} does not exist"
+         ecflow_client --label=info "CLAEF ${date} does not exist"
+
+      fi
+
+      if [ -d ${RUNDIR_1k} ] ; then
+
+         ecflow_client --label=info "Cleaning CLAEF_1k ${date}"
+         rm -rf ${RUNDIR_1k}
+
+      else
+
+         ecflow_client --label=info "CLAEF_1k ${date} does not exist"
 
       fi
 
