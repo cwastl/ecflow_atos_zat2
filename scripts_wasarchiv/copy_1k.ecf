@@ -57,9 +57,9 @@ then
          . /ec/${files}/tc/zat2/home/CLAEF/SCR/setup_cy43.ksh $run $date $mem $lagg $assimc $user $files
          ##################################################################################################
 
-         DATAPATH=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p1date}/${p1run}/MEM_${mem}
-         DATAPATHA=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${date}/${run}/MEM_${mem}
-         OBSPATHA=/ec/${files}/tc/zat2/tcwork/claef1k/DATA/${date}/${run}
+         DATAPATH=/ec/${files}/tc/zacs/tcwork/claef1k/DATA/${p1date}/${p1run}/MEM_${mem}
+         DATAPATHA=/ec/${files}/tc/zacs/tcwork/claef1k/DATA/${date}/${run}/MEM_${mem}
+         OBSPATHA=/ec/${files}/tc/zacs/tcwork/claef1k/DATA/${date}/${run}
 
          # Create obs working directory
          if [[ ${mem} == "00" ]]
@@ -97,9 +97,9 @@ then
             cp ${DATAPATH}/001/ICMSHAROM+0003 .
          fi
 
-         if [ -f /ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 ]
+         if [ -f /ec/${files}/tc/zacs/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 ]
          then
-            cp /ec/${files}/tc/zat2/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 .
+            cp /ec/${files}/tc/zacs/tcwork/claef1k/DATA/${p8date}/${p8run}/MEM_${mem}/001/ICMSHAROM+0024 .
          fi
 
          ecflow_client --label=info "Copying soil guess"

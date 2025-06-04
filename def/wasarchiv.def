@@ -1,4 +1,4 @@
-#5.12.4
+#5.13.4
 suite wasarchiv
   edit ECF_MICRO '%'
   edit ECF_EXTN '.ecf'
@@ -27,7 +27,7 @@ suite wasarchiv
       cron 01:40
   endfamily
   family runs
-    repeat date DATUM 20240605 20241231 1
+    repeat date DATUM 20250129 20261231 1
     task dummy
       defstatus suspended
       edit NP '1'
